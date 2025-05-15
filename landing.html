@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Temperature Converter</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #121212;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #1f1f1f;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
+      width: 350px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #00ffaa;
+    }
+
+    label, select, input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    input, select {
+      padding: 0.5rem;
+      border: none;
+      border-radius: 8px;
+      background: #2a2a2a;
+      color: #fff;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.7rem;
+      font-size: 1rem;
+      background: #00ffaa;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #00dd99;
+    }
+
+    .result {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #ffd700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Temperature Converter</h2>
+    
+    <label for="temp">Enter Temperature:</label>
+    <input type="number" id="temp" placeholder="e.g. 32" />
+
+    <label for="from">Convert From:</label>
+    <select id="from">
+      <option value="C">Celsius</option>
+      <option value="F">Fahrenheit</option>
+      <option value="K">Kelvin</option>
+    </select>
+
+    <label for="to">Convert To:</label>
+    <select id="to">
+      <option value="F">Fahrenheit</option>
+      <option value="C">Celsius</option>
+      <option value="K">Kelvin</option>
+    </select>
+
+    <button onclick="convertTemp()">Convert</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function convertTemp() {
+      const temp = parseFloat(document.getElementById('temp').value);
+      const from = document.getElementById('from').value;
+      const to = document.getElementById('to').value;
+      const result = document.getElementById('result');
+
+      if (isNaN(temp)) {
+        result.innerHTML = "Please enter a valid number.";
+        return;
+      }
+
+      let converted;
+
+      if (from === to) {
+        converted = temp;
+      } else if (from === 'C' && to === 'F') {
+        converted = (temp * 9/5) + 32;
+      } else if (from === 'F' && to === 'C') {
+        converted = (temp - 32) * 5/9;
+      } else if (from === 'C' && to === 'K') {
+        converted = temp + 273.15;
+      } else if (from === 'K' && to === 'C') {
+        converted = temp - 273.15;
+      } else if (from === 'F' && to === 'K') {
+        converted = (temp - 32) * 5/9 + 273.15;
+      } else if (from === 'K' && to === 'F') {
+        converted = (temp - 273.15) * 9/5 + 32;
+      }
+
+      result.innerHTML = `Converted Temperature: ${converted.toFixed(2)}°${to}`;
+    }
+  </script>
+</body>
+</html>
